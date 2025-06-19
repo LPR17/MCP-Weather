@@ -1,6 +1,10 @@
 from typing import Any
+import json
+import sys
 import httpx
 from mcp.server.fastmcp import FastMCP
+
+print("✅ server.py starting...", file=sys.stderr)
 
 #Initialize the FastMCP server
 mcp = FastMCP("weather")
@@ -106,8 +110,9 @@ async def get_current_weather(latitude: float, longitude: float) -> str:
         return "Unable to fetch current weather data for this location."
 
     # Return the raw JSON data as a string
-    return data
+    return json.dumps(data, indent=2)
 
 if __name__ == "__main__":
+    print("✅ MCP server ready, running...", file=sys.stderr)
     # Entry point for launching the MCP server
     mcp.run(transport='stdio')
